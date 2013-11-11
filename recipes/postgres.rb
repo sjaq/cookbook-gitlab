@@ -16,7 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-include_recipe 'postgresql::ruby'
 
 # Enable secure password generation
 ::Chef::Recipe.send(:include, Opscode::OpenSSL::Password)
@@ -32,31 +31,18 @@ end
 database = node['gitlab']['database']['database']
 database_user = node['gitlab']['database']['username']
 database_password = node['gitlab']['database']['password']
-database_host = node['gitlab']['database']['host']
-database_connection = {
-  :host     => database_host,
-  :port     => '5432',
-  :username => 'postgres',
-  :password => node['postgresql']['password']['postgres']
-}
+
+# Create the user
+pg_user database_user do
+  privileges superuser: false, createdb: false, login: true
+  password database_password
+end
 
 # Create the database
-postgresql_database database do
-  connection      database_connection
-  action          :create
+pg_database database do
+  owner database_user
+  encoding node['gitlab']['database']['encoding']
+  locale "en_US.#{node['gitlab']['database']['encoding'].upcase}"
+  template "template0"
 end
 
-# Create the database user
-postgresql_database_user database_user do
-  connection      database_connection
-  password        database_password
-  database_name   database
-  action          :create
-end
-
-# Grant all privileges to user on database
-postgresql_database_user database_user do
-  connection      database_connection
-  database_name   database
-  action          :grant
-end
