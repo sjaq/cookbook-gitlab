@@ -40,7 +40,7 @@ default['gitlab']['shell']['git_branch'] = "v1.7.1"
 # Database setup
 default['gitlab']['database']['type'] = "mysql"
 default['gitlab']['database']['adapter'] = node['gitlab']['database']['type'] == "mysql" ? "mysql2" : "postgresql"
-default['gitlab']['database']['encoding'] = node['gitlab']['database']['type'] == "mysql" ? "utf8" : "unicode"
+default['gitlab']['database']['encoding'] = "utf8"
 default['gitlab']['database']['host'] = "localhost"
 default['gitlab']['database']['pool'] = 5
 default['gitlab']['database']['database'] = "gitlab"
