@@ -46,6 +46,16 @@ default['gitlab']['database']['pool'] = 5
 default['gitlab']['database']['database'] = "gitlab"
 default['gitlab']['database']['username'] = "gitlab"
 
+# Email setup
+default['gitlab']['email']['smtp'] = false
+default['gitlab']['email']['address'] = nil
+default['gitlab']['email']['port'] = nil
+default['gitlab']['email']['user_name'] = nil
+default['gitlab']['email']['password'] = nil
+default['gitlab']['email']['domain'] = nil
+default['gitlab']['email']['authentication'] = nil
+default['gitlab']['email']['enable_starttls_auto'] = nil
+
 default['gitlab']['install_ruby'] = "1.9.3-p448"
 default['gitlab']['cookbook_dependencies'] = %w[
   build-essential zlib readline ncurses git openssh

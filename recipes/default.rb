@@ -144,7 +144,6 @@ git node['gitlab']['app_home'] do
   group node['gitlab']['group']
 end
 
-
 # Setup the database
 case node['gitlab']['database']['type']
   when 'mysql'
@@ -171,6 +170,7 @@ template "#{node['gitlab']['app_home']}/config/database.yml" do
       :password => node['gitlab']['database']['password']
   )
 end
+
 # Render gitlab config file
 template "#{node['gitlab']['app_home']}/config/gitlab.yml" do
   owner node['gitlab']['user']
@@ -184,6 +184,16 @@ template "#{node['gitlab']['app_home']}/config/gitlab.yml" do
       :backup_path => node['gitlab']['backup_path'],
       :backup_keep_time => node['gitlab']['backup_keep_time']
   )
+end
+
+# Render gitlab smtp config file
+if default['gitlab']['email']['smtp']
+  template "#{node['gitlab']['app_home']}/config/initializers/smtp_settings.rb" do
+    owner node['gitlab']['user']
+    group node['gitlab']['group']
+    source "smtp_settings.rb.erb"
+    mode 0644
+  end
 end
 
 # create log, tmp, pids and sockets directory
