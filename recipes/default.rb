@@ -187,7 +187,7 @@ template "#{node['gitlab']['app_home']}/config/gitlab.yml" do
 end
 
 # Render gitlab smtp config file
-if default['gitlab']['email']['smtp']
+if node['gitlab']['email']['smtp']
   template "#{node['gitlab']['app_home']}/config/initializers/smtp_settings.rb" do
     owner node['gitlab']['user']
     group node['gitlab']['group']
