@@ -46,14 +46,18 @@ if node['gitlab']['install_ruby'] !~ /package/
   # build ruby
   ruby_build_ruby node['gitlab']['install_ruby']
 
+  link "/usr/bin/ruby" do
+    to "/usr/local/ruby/#{node['gitlab']['install_ruby']}/bin/ruby"
+  end
+
   # Drop off a profile script.
   template "/etc/profile.d/gitlab.sh" do
     owner "root"
     group "root"
     mode 0755
     variables(
-        :fqdn => node['fqdn'],
-        :install_ruby => node['gitlab']['install_ruby']
+      :fqdn => node['fqdn'],
+      :install_ruby => node['gitlab']['install_ruby']
     )
   end
 
