@@ -22,6 +22,7 @@
 default['gitlab']['user'] = "git"
 default['gitlab']['group'] = "git"
 default['gitlab']['home'] = "/srv/git"
+default['gitlab']['domain'] = node['fqdn']
 default['gitlab']['app_home'] = default['gitlab']['home'] + '/gitlab'
 default['gitlab']['web_fqdn'] = nil
 default['gitlab']['nginx_server_names'] = [ 'gitlab.*', node['fqdn'] ]

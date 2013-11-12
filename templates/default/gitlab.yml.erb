@@ -15,7 +15,7 @@ production: &base
   ## GitLab settings
   gitlab:
     ## Web server settings
-    host: <%= @fqdn %>
+    host: <%= node['gitlab']['domain'] %>
     port: <%= @port %>
     https: <%= @https_boolean %>
 
